@@ -1,0 +1,19 @@
+<html>
+    <head>
+        <title>Curso Platzi - React.js</title>
+    </head>
+    <body>
+        <section id="container"></section>
+        <script src="http://fb.me/react-0.13.3.js"></script>
+        <script src="http://fb.me/JSXTransformer-0.13.3.js"></script>
+        <script type="text/jsx">
+            var HelloWorldComponent = React.createClass({
+                render: function(){
+                    return <h1>Hola { this.props.name }!</h1>
+                }
+            });
+
+            React.render(<HelloWorldComponent name="Lorgio"/>, document.getElementById('container'));
+        </script>
+    </body>
+</html>
