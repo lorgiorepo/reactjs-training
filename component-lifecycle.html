@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <map id="app"></map>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.21.0/babel.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react-dom.js"></script>
+    <script type="text/babel">
+        /*
+        * Componente puro
+        */
+        function Hola(props){
+            return (
+                <h1 id="Title" onClick={props.onClick}>
+                    Hola {props.name} {props.count}
+                </h1>
+            );
+        }
+
+        /*
+        * Componente con estado o contenedor
+        */
+        class MiComponente extends React.Component {
+            //Lifecycle montado 1
+            constructor(props){
+                super(props);
+
+                this.state = {
+                    count: 0,
+                };
+
+                this.handleClick = this.handleClick.bind(this);
+            }
+            //Lifecycle montado 2
+            componentWillMount() {
+                console.log('El componente se va a montar');
+            }
+            //Lifecycle montado 4
+            componentDidMount() {
+                document.addEventListener('click', this.handleClick);
+            }
+            //Lifecycle Actualizacion 1
+            /*
+            componenteWillReceiveProps(nextProps) {
+                this.setState({
+                    count: this.state.count * 2;
+                });
+            }
+            */
+            //Lifecycle Actualizacion 2
+            shouldComponentUpdate(nextProps, nextState) {
+                if(nextState !== this.state.count) return true;
+                return false;
+            }
+            //Lifecycle Actualizacion 3
+            componentWillUpdate() {
+                console.log('El componente se va actualizar');
+            }
+            //Lifecycle Actualizacion 5
+            componentDidUpdate() {
+                console.log('El componente se actualizo');
+            }
+
+            componentWillUnmount() {
+                document.removeEventListener('click', this.handleClick);
+            }
+
+            handleClick() {
+                this.setState({
+                    count: this.state.count + 1,
+                });
+            }
+            //Lifecycle montado 3
+            //Lifecycle Actualizacion 4
+            render() {
+                return (
+                    <Hola 
+                    name={this.props.name}
+                    count={this.state.count}
+                    onClick={this.handleClick}
+                    />
+                )
+            }
+        }
+
+        ReactDOM.render(
+            <MiComponente name="Lorgio" />,
+            document.getElementById('app')
+        )
+    </script>
+</body>
+</html>
