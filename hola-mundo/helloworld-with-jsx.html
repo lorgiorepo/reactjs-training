@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <map id="app"></map>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.21.0/babel.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react-dom.js"></script>
+    <script type="text/babel">
+        function Hola(props){
+            const name = props.name;
+            
+            return (
+                <h1 id="Title">
+                    Hola {name}
+                </h1>
+            )
+        }
+
+        ReactDOM.render(
+            <Hola name="Lorgio" />,
+            document.getElementById('app')
+        )
+
+        setTimeout(
+            () => {
+                ReactDOM.render(
+                     <Hola name="Lorgio Trinidad" />,
+                    document.getElementById('app')
+                );
+            },
+            1000
+        );
+    </script>
+</body>
+</html>
