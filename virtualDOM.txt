@@ -1,0 +1,14 @@
+Virtual DOM:
+
+Es una representación en forma de objetos nativos de JavaScript de los elementos 
+y componentes usadosen nuestra UI con un formato muy similar al DOM nativo del navegador.
+
+Algoritmo de diferencias: Cuando reactjs aplica el algoritmo de diferencia se fija en las siguientes reglas:
+Diferencias de tipo
+Propiedades de nodo
+
+Los componentes tienen un metodo para saber si tienen que actualizarse o no.
+
+Uso de keys en las listas: Se puede colocar a cualquier elemento de la lista para indicar que es unico.
+Estos keys son unicos por lista.
+
