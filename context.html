@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <map id="app"></map>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.21.0/babel.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react-dom.js"></script>
+    <script type="text/babel">
+        /*
+        * Componente puro
+        */
+        function Hola(props, context){
+            return (
+                <h1 id="Title" onClick={props.onClick} onMouseEnter={props.onMouseEnter}>
+                    Hola {props.name} {context.count}
+                </h1>
+            );
+        }
+
+        /* Context: Obteniendo acceso al contexto */
+        Hola.contextType = {
+            count: React.PropTypes.number
+        };
+
+        /*
+        * Componente con estado o contenedor
+        */
+        class MiComponente extends React.Component {
+            constructor(props){
+                super(props);
+
+                this.state = {
+                    count: 0,
+                };
+
+                this.handleClick = this.handleClick.bind(this);
+            }
+
+            /* Context: Funcion para enviar datos al contexto */
+            getChildContext() {
+                return {
+                    count: this.state.count,
+                };
+            }
+
+            handleClick() {
+                this.setState({
+                    count: this.state.count + 1,
+                });
+            }
+
+            handleMouseEnter(event){
+                console.log(event.target);
+            }
+
+            render() {
+                return (
+                    <Hola 
+                    name={this.props.name}
+                    count={this.state.count}
+                    onClick={this.handleClick}
+                    onMouseEnter={this.handleMouseEnter}
+                    />
+                )
+            }
+        }
+
+        /* Context: Tipo de dato que se va enviar al contexto */
+        MiComponente.childContextTypes = {
+            count: React.PropTypes.number,
+        };
+
+        ReactDOM.render(
+            <MiComponente name="Lorgio" />,
+            document.getElementById('app')
+        )
+    </script>
+</body>
+</html>
