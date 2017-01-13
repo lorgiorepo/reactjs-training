@@ -13,9 +13,33 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
         <script type="text/babel">
             class CommentItem extends React.Component {
+                constructor(props) {
+                    super(props);
+
+                    this.state = {
+                        active: false,
+                    };
+
+                    this.handleMouseEnter = this.handleMouseEnter.bind(this);
+                    this.handleMouseLeave = this.handleMouseLeave.bind(this);
+                }
+
+                handleMouseEnter() {
+                    this.setState({
+                        active: true,
+                    });
+                }
+
+                handleMouseLeave() {
+                    this.setState({
+                        active: false,
+                    })
+                }
+
                 render() {
                     return (
-                        <a href="#" className="list-group-item">
+                        <a href="#" className={"list-group-item " + (this.state.active ? 'active' : '')} 
+                        onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave}>
                             <h4 className="list-group-item-heading">{this.props.title}</h4>
                             <p className="list-group-item-text">{this.props.detail}</p>
                         </a>
@@ -26,7 +50,7 @@
             class CommentItemList extends React.Component {
                 render() {
                     const children = this.props.comments.map((comment, i) =>
-                    <CommentItem key={i} title={comment.title} detail={comment.detail}/>
+                    <CommentItem key={i} title={comment.title} detail={comment.detail} active={false}/>
                     );
                     return <div className="list-group">{children}</div>
                 }
