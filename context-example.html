@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <map id="app"></map>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.21.0/babel.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react-dom.js"></script>
+    <script type="text/babel">
+        class Button extends React.Component{
+            render() {
+                return (
+                    <button style={{background: this.props.color}}>
+                        {this.props.children}
+                    </button>
+                );
+            }
+        }
+
+        class Message extends React.Component{
+            render() {
+                return (
+                    <div>
+                        {this.props.text} <Button color={this.props.color}>Delete</Button>
+                    </div>
+                );
+            }
+        }
+
+        class MessageList extends React.Component {
+            render() {
+                const color = "green";
+                const children = this.props.messages.map((message, i) => 
+                <Message key={i} text={message.text} color={color} />
+                );
+                return <div>{children}</div>
+            }
+        }
+
+        let messages = ["Hola", "desde", "ReactJS", "Component"];
+
+        ReactDOM.render(
+            <MessageList messages={messages} />,
+            document.getElementById('app')
+        )
+    </script>
+</body>
+</html>
