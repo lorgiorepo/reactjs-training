@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Document</title>
+    </head>
+    <body>
+        <map id="app"></map>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.21.0/babel.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react-dom.js"></script>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <script type="text/babel">
+            class CommentItem extends React.Component {
+                render() {
+                    return (
+                        <a href="#" className="list-group-item">
+                            <h4 className="list-group-item-heading">{this.props.title}</h4>
+                            <p className="list-group-item-text">{this.props.detail}</p>
+                        </a>
+                    );
+                }
+            }
+
+            class CommentItemList extends React.Component {
+                render() {
+                    const children = this.props.comments.map((comment, i) =>
+                    <CommentItem key={i} title={comment.title} detail={comment.detail}/>
+                    );
+                    return <div className="list-group">{children}</div>
+                }
+            }
+
+            const comments = [
+                {'title': 'Noticia de tecnologia big data', 'detail': 'Hubo un gran avance tecnologico en el 2016'},
+                {'title': 'Noticia de arquitectura de servicios', 'detail': 'Hubo un gran avance tecnologico sobre microservicios y serverless'},
+                {'title': 'Noticia de componentes ui', 'detail': 'Hubo un gran avance de definir componentes ui reutilizables'}
+            ];
+
+            ReactDOM.render(
+                <CommentItemList comments={comments}/>,
+                document.getElementById('app')
+            )
+        </script>
+    </body>
+</html>
