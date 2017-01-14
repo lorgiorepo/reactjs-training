@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
 </head>
+
 <body>
     <map id="app"></map>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.21.0/babel.js"></script>
@@ -74,6 +76,48 @@
                 return <BlogPost blogPost={this.state.blogPost} />;
             }
         }
+
+        const CommentListWithSubscription = withSubscription(
+            CommentList,
+            (DataSource) => DataSource.getComments()
+        );
+
+        const BlogPostWithSubscription = withSubscription(
+            BlogPost,
+            (DataSource, props) => DataSource.getBlogPost(props.id)
+        ):
+
+        // This function takes a component
+        function withSubscription(WrappedComponent, selectData) {
+            return class extends React.Component {
+                constructor(props) {
+                    super(props);
+                    this.handleChange = this.handleChange.bind(this);
+                    this.state = {
+                        data: selectData(DataSource, props)
+                    };
+                }
+
+                componentDidMount() {
+                    // ... that takes care of the subscription...
+                    DataSource.addChangeListener(this.handleChange);
+                }
+
+                componentWillUnmount() {
+                    DataSource.removeChangeListener(this.handleChange);
+                }
+
+                handleChange() {
+                    this.setState({
+                        data: selectData(DataSource, this.props)
+                    });
+                }
+                render() {
+                    return <WrappedComponent data={this.state.data} {...this.props} />;
+                }
+            }
+        }
     </script>
 </body>
+
 </html>
