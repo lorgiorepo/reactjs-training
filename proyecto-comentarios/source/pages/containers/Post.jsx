@@ -4,7 +4,7 @@ import {Link} from 'react-router';
 class Post extends Component {
     render() {
         return (
-            <section name="about">
+            <section name="post">
                 <h1>Post</h1>
                 <Link to="/">
                     Go to home
@@ -17,4 +17,4 @@ class Post extends Component {
     };
 }
 
-export default About;
+export default Post;
