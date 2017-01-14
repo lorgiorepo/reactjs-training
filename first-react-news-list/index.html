@@ -12,6 +12,21 @@
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
         <script type="text/babel">
+            /*
+            * Componente puro
+            */
+            function CommentContent(props) {
+                return (
+                    <div>
+                        <h4 className="list-group-item-heading">{props.title}</h4>
+                        <p className="list-group-item-text">{props.detail}</p>
+                    </div>
+                );
+            }
+
+            /*
+            * Componente con estado o contenedor
+            */
             class CommentItem extends React.Component {
                 constructor(props) {
                     super(props);
@@ -40,8 +55,7 @@
                     return (
                         <a href="#" className={"list-group-item " + (this.state.active ? 'active' : '')} 
                         onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave}>
-                            <h4 className="list-group-item-heading">{this.props.title}</h4>
-                            <p className="list-group-item-text">{this.props.detail}</p>
+                            <CommentContent title={this.props.title} detail={this.props.detail} />
                         </a>
                     );
                 }
