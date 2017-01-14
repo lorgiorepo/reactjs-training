@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+  <main id="app"></main>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.18.2/babel.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react-dom.js"></script>
+  <script type="text/babel">
+    function Counter(WrappedComponent) {
+      class CounterHOC extends React.Component {
+        constructor(props) {
+          super(props);
+
+          this.state = {
+            count: 0,
+          };
+
+          this.handleClick = this.handleClick.bind(this);
+        }
+
+        getChildContext() {
+          return {
+            count: this.state.count,
+          };
+        }
+
+        handleClick() {
+          this.setState({
+            count: this.state.count + 1,
+          });
+        }
+
+        render() {
+          return (
+            <WrappedComponent
+              onClick={this.handleClick}
+              {...this.props}
+            />
+          )
+        }
+      }
+
+      CounterHOC.childContextTypes = {
+        count: React.PropTypes.number,
+      };
+
+      return CounterHOC;
+    }
+
+    function Hola(props, context) {
+      return (
+        <h1 id="Title" onClick={props.onClick}>
+          Hola {props.name} {context.count}
+        </h1>
+      );
+    }
+
+    Hola.contextTypes = {
+      count: React.PropTypes.number
+    };
+
+    const HolaHOC = Counter(Hola);
+
+    class MiComponente extends React.Component {
+      constructor(props) {
+        super(props);
+
+        this.state = {
+          count: 0,
+        };
+
+        this.handleClick = this.handleClick.bind(this);
+      }
+
+      getChildContext() {
+        return {
+          count: this.state.count,
+        };
+      }
+
+      componentWillMount() {
+        console.log('el componente se va a montar');
+      }
+
+      componentDidMount() {
+        document.addEventListener('click', this.handleClick);
+      }
+
+      // componentWillReceiveProps(nextProps) {
+      //   this.setState({
+      //     count: this.state.count * 2,
+      //   });
+      // }
+
+      shouldComponentUpdate(nextProps, nextState) {
+        if (nextState.count !== this.state.count) return true;
+        return false;
+      }
+
+      componentWillUpdate() {
+        console.log('el componente se va a actualizar');
+      }
+
+      componentDidUpdate() {
+        console.log('el componente se actualizó');
+      }
+
+      componentWillUnmount() {
+        document.removeEventListener('click', this.handleClick);
+      }
+
+      handleClick() {
+        this.setState({
+          count: this.state.count + 1,
+        });
+      }
+
+      handleMouseEnter(event) {
+        console.log(event.target);
+      }
+
+      render() {
+        return (
+          <Hola
+            name={this.props.name}
+            count={this.state.count}
+            onClick={this.handleClick}
+            onMouseEnter={this.handleMouseEnter}
+          />
+        );
+      }
+    }
+
+    MiComponente.childContextTypes = {
+      count: React.PropTypes.number,
+    };
+
+    const mixin = {
+      handleClick() {
+        console.log('clickeado');
+      },
+    };
+
+    const Componente = React.createClass({
+      mixins: [
+        mixin,
+      ],
+      render() {
+        return <div onClick={this.handleClick}>hola</div>;
+      }
+    })
+
+    ReactDOM.render(
+      <Componente />,
+      document.getElementById('app')
+    );
+  </script>
+</body>
+</html>
