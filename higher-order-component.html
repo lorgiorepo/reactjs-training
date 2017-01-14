@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <map id="app"></map>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.21.0/babel.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react-dom.js"></script>
+    <script type="text/babel">
+        class CommentList extends React.Component {
+            constructor() {
+                super();
+                this.handleChange = this.handleChange.bind(this);
+                this.state = {
+                    // "DataSource" is some global data source
+                    comments: DataSource.getComments()
+                };
+            }
+
+            componentDidMount() {
+                // Subscribe to changes
+                DataSource.addChangeListener(this.handleChange);
+            }
+
+            componentWillMount() {
+                // Clean up listener
+                DataSource.removeChangeListener(this.handleChange)
+            }
+
+            handleChange() {
+                // Update component state whenever the data source changes
+                this.setState({
+                    comments: DataSource.getComments()
+                });
+            }
+
+            render() {
+                return (
+                    <div>
+                        {this.state.comments.map((comment) => (
+                            <Comment comment={comment} key={comment.id} />
+                        ))}
+                    </div>
+                );
+            }
+        }
+
+        class BlogPost extends React.Component {
+            constructor() {
+                super();
+                this.handleChange = this.handleChange.bind(this);
+                this.state = {
+                    blogPost: DataSource.getBlogPost(props.id)
+                }
+            }
+
+            componentDidMount() {
+                DataSource.addChangeListener(this.handleChange);
+            }
+
+            componentWillUnmount() {
+                DataSource.removeChangeListener(this.handleChange);
+            }
+
+            handleChange() {
+                this.setState({
+                    blogPost: DataSource.getBlogPost(this.props.id)
+                });
+            }
+            render() {
+                return <BlogPost blogPost={this.state.blogPost} />;
+            }
+        }
+    </script>
+</body>
+</html>
