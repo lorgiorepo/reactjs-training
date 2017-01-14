@@ -8,5 +8,5 @@ render(
     <BrowserRouter>
         <Pages />
     </BrowserRouter>,
-    document.getElementById('render-targe'),
+    document.getElementById('render-target'),
 )
