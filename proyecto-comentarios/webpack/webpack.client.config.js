@@ -11,6 +11,7 @@ module.exports = {
             {
                 test: /\.jsx?$/,
                 loader: 'eslint',
+								exclude: /(node_modules)/,
             },
         ],
         loaders: [
@@ -34,6 +35,9 @@ module.exports = {
         ]
     },
     target: 'web',
+		resolve: {
+			extensions: ['', '.js', '.jsx', '.css'],
+		},
     plugins: [
         new ExtractTextPlugin('../statics/styles.css'),
     ],

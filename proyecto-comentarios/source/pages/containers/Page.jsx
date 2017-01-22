@@ -1,42 +1,46 @@
 import React from 'react';
 import {
-    Match,
-    Miss,
-    Link,
-} from 'react-router';
+  Match,
+  Miss,
+  } from 'react-router';
 
-import Home from './Home.jsx';
-import Post from './Post.jsx';
-import Error404 from './Error404.jsx';
-import Profile from './Profile.jsx';
-import Header from '../../shared/components/Header.jsx';
+import Home from './Home';
+import Post from './Post';
+import Profile from './Profile';
+import Error404 from './Error404';
+
+import Header from '../../shared/components/Header';
+
 
 function Pages() {
-    return (
-        <main role="application">
-            <Header />
-            {/* List de articulos */}
-            <Match
-                pattern="/"
-                exactly
-                component={Home}
-            />
-            {/* Detalle d articulo */}
-            <Match
-                pattern="/post/:id"
-                exactly
-                component={Post}
-            />
-            {/* Perfil de usuario */}
-            <Match
-                pattern="/user/:id"
-                exactly
-                component={Profile}
-            />
-            {/* Error 404 */}
-            <Miss component={Error404}/>
-        </main>
-    )
+  return (
+    <main role="application">
+      <Header />
+
+      {/* List de artículos */}
+      <Match
+        pattern="/"
+        exactly
+        component={Home}
+      />
+      {/* Detalle de artículo */}
+      <Match
+        pattern="/posts/:id"
+        exactly
+        component={Post}
+      />
+      {/* Perfil de usuario */}
+      <Match
+        pattern="/user/:id"
+        exactly
+        component={Profile}
+      />
+      {/* Error 404 */}
+      <Miss
+        component={Error404}
+      />
+    </main>
+  );
 }
 
 export default Pages;
