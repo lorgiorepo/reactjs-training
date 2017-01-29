@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import { FormattedMessage } from 'react-intl';
 
 import Post from '../../posts/containers/Post';
 import Loading from '../../shared/components/Loading';
@@ -42,10 +43,14 @@ class Profile extends Component {
 
     return (
       <section name="Profile">
-        <h2>profile of {this.state.user.name}</h2>
+        <h2>
+          <FormattedMessage id="title.profile" values={{ name: this.state.user.name }} />
+        </h2>
 
         <fieldset>
-          <legend>Basic Info</legend>
+          <legend>
+            <FormattedMessage id="profile.field.basic" />
+          </legend>
           <input type="email" value={this.state.user.email} disabled />
         </fieldset>
 
