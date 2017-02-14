@@ -34,14 +34,14 @@ const config = {
         loader: 'babel',
         exclude: /(node_modules)/,
         query: {
-          presets: ['latest-minimal', 'react'],
+          presets: ['react'],
           env: {
             production: {
               plugins: ['transform-regenerator', 'transform-runtime'],
               presets: ['es2015'],
             },
             development: {
-              plugins: ['latest-minimal'],
+              presets: ['latest-minimal'],
             },
           },
         },
